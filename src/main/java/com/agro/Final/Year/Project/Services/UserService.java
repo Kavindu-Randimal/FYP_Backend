@@ -1,5 +1,6 @@
 package com.agro.Final.Year.Project.Services;
 
+import com.agro.Final.Year.Project.Contract.SupplyChain;
 import com.agro.Final.Year.Project.Models.Dto.*;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tuples.generated.Tuple11;
@@ -28,5 +29,5 @@ public interface UserService {
 
      List<ContractRecord> getContracts(String farmerName);
 
-     TransactionReceipt loadContract(TransactionBase contractName);
+     List<SupplyChain.ProcessEvent> loadContract(TransactionBase contractName) throws Exception;
 }

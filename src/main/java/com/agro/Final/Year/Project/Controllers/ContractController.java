@@ -1,10 +1,10 @@
 package com.agro.Final.Year.Project.Controllers;
 
 
+import com.agro.Final.Year.Project.Contract.SupplyChain;
 import com.agro.Final.Year.Project.Models.Dto.ContractRecord;
 import com.agro.Final.Year.Project.Models.Dto.ProcessEvent;
 import com.agro.Final.Year.Project.Models.Dto.TransactionBase;
-import com.agro.Final.Year.Project.Repositories.ContractRecordRepository;
 import com.agro.Final.Year.Project.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -37,7 +37,7 @@ public class ContractController {
         return userService.addEvent(
                 processEvent,
                 processEvent.getContractId(),
-                processEvent.getContractId(),
+                processEvent.getPrivateKey(),
                 processEvent.getGasPrice(),
                 processEvent.getGasLimit());
     }
@@ -53,7 +53,7 @@ public class ContractController {
     }
 
     @PostMapping("/contracts/load")
-    public TransactionReceipt getContract(@RequestBody TransactionBase transactionBase) {
+    public List<SupplyChain.ProcessEvent> getContract(@RequestBody TransactionBase transactionBase) throws Exception{
         return userService.loadContract(transactionBase);
     }
 }

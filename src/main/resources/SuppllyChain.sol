@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity >=0.4.22 <0.8.0;
+pragma solidity >=0.4.22 <0.9.0;
 pragma experimental ABIEncoderV2;
 
 contract SupplyChain {
@@ -91,12 +91,20 @@ contract SupplyChain {
         }
     }
 
-    function initializeContract(string memory _cultivationFieldAddress ,uint _batchId) public{
+    // function initializeContract(string memory _cultivationFieldAddress ,uint _batchId) public{
 
+    // }
+
+    function getLastEvent() public view returns(ProcessEvent memory processEvent) {
+        return processEvents[eventSize - 1];
     }
 
-    function getEvents() public view returns(ProcessEvent memory processEvent) {
-        return processEvents[eventSize];
+    function getAllEvents() public view returns(ProcessEvent[] memory processEvent) {
+        ProcessEvent[] memory pe = new ProcessEvent[](eventSize);
+        for (uint i = 1; i < eventSize; i++) {
+            pe[i] = processEvents[i];
+        }
+        return pe;
     }
 
 }

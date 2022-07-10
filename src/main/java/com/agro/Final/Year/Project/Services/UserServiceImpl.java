@@ -1,12 +1,12 @@
 package com.agro.Final.Year.Project.Services;
 
 import com.agro.Final.Year.Project.Configurations.Web3Client;
+import com.agro.Final.Year.Project.Contract.SupplyChain;
 import com.agro.Final.Year.Project.Models.Dto.*;
 import com.agro.Final.Year.Project.Repositories.ContractRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.web3j.crypto.Credentials;
-import org.web3j.model.SupplyChain;
 import org.web3j.protocol.core.methods.response.EthBlockNumber;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tuples.generated.Tuple11;
@@ -80,11 +80,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public TransactionReceipt loadContract(TransactionBase transactionBase) {
+    public List<SupplyChain.ProcessEvent> loadContract(TransactionBase transactionBase) throws Exception {
         Credentials credentials = Credentials.create(transactionBase.getPrivateKey());
         SupplyChain supplyChain = SupplyChain.load(transactionBase.getContractId(),
                 web3Client.getWeb3(), credentials, new StaticGasProvider(transactionBase.getGasPrice(), transactionBase.getGasLimit()));
-        return supplyChain.getTransactionReceipt().get();
+        return supplyChain.getAllEvents().send();
     }
 
     @Override
